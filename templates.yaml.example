@@ -1,0 +1,323 @@
+# ══════════════════════════════════════════════════════════════════════════════
+#  templates.yaml.example — Design Clanker sample configuration
+# ══════════════════════════════════════════════════════════════════════════════
+#
+#   cp templates.yaml.example templates.yaml
+#
+# templates.yaml contains NO secrets (API keys live in .env), but it does
+# contain your Airtable base IDs and Figma file keys — it is gitignored by
+# default. Commit it with `git add -f templates.yaml` if your repo is private.
+#
+# Finding the IDs:
+#   airtable_base_id      Open your base → the URL starts with
+#                         airtable.com/appXXXXXXXXXXXXXX/…  → "appXXXXXXXXXXXXXX"
+#   figma_file_key        figma.com/design/<FILE_KEY>/Your-File-Name
+#   figma_frame_node_id   Right-click a frame → Copy link to selection.
+#                         The link ends in ?node-id=12-345 → use "12:345"
+#                         ("12-345" also works; it's normalised automatically).
+#
+# This file shows three templates of increasing complexity plus a PDF report:
+#   1. Speaker Card    — minimal single-output template
+#   2. Event Banner    — manual variants selected by a single-select field
+#   3. Session Assets  — the works: multi-output, selection field, auto/boolean/
+#                        field variants, per-output mapping overrides
+#   4. Sponsor Recap   — multi-page PDF report with conditional pages
+#
+# Full key-by-key reference: docs/configuration.md
+
+
+templates:
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # 1. SPEAKER CARD — the minimal template
+  #    One frame, one image, one attachment field.
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "Speaker Card"
+
+    # ── Airtable ──
+    airtable_base_id:    "appXXXXXXXXXXXXXX"
+    airtable_table_name: "Speakers"           # exact name, case-sensitive
+
+    # Trigger: a CHECKBOX field. When checked, the record is processed and the
+    # box is unchecked afterwards. (For single-select triggers, see template 3.)
+    airtable_trigger_field: "Ready for Design"
+
+    # Where the finished JPEG is uploaded (attachment field).
+    airtable_attachment_field: "Generated Design"
+
+    # ── Figma ──
+    figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+    figma_frame_node_id: "1:2"
+    figma_export_scale:  2.0     # 1.0 = 1x … 4.0 = 4x. 2.0 is good for social.
+
+    # ── Mappings: "Airtable field name" → "Figma layer name" ──
+    field_mappings:
+      "Full Name":  "Speaker Name"
+      "Job Title":  "Title"
+      "Company":    "Company"
+
+    # Attachment fields → Figma image placeholder layers (rectangle/ellipse/frame).
+    # Photos are auto-clipped to the layer's corner radius (ellipses → circles).
+    image_field_mappings:
+      "Headshot": "Photo"
+
+    # ── Rendering options ──
+    # RECOMMENDED: set your Figma text layers to 0% opacity and keep this false.
+    # If true, the renderer paints a background-coloured box over each text
+    # layer to erase placeholder text — visible on non-uniform backgrounds.
+    erase_placeholders: false
+
+    # AI background removal (rembg/U2Net) for mapped photos. Photos that
+    # already have transparency are skipped.
+    remove_background: true
+
+    # ── Fonts ──
+    # Figma font family (+ weight suffix) → TTF file in the fonts/ directory.
+    # Use STATIC font files, not variable fonts (Pillow can't load those).
+    font_map:
+      "Space Grotesk":          "SpaceGrotesk-Regular.ttf"
+      "Space Grotesk Medium":   "SpaceGrotesk-Medium.ttf"
+      "Space Grotesk SemiBold": "SpaceGrotesk-SemiBold.ttf"
+      "Space Grotesk Bold":     "SpaceGrotesk-Bold.ttf"
+
+    # Optional per-layer tweaks when the auto-detected style needs a nudge:
+    # font_overrides:
+    #   "Speaker Name": { font_path: "SpaceGrotesk-Bold.ttf", font_size: 48 }
+
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # 2. EVENT BANNER — manual variants
+  #    An Airtable single-select ("Location") picks which Figma frame to use.
+  #    All variants share the same layer names and field_mappings.
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "Event Banner"
+
+    airtable_base_id:          "appXXXXXXXXXXXXXX"
+    airtable_table_name:       "Events"
+    airtable_trigger_field:    "Generate Banner"
+    airtable_attachment_field: "Banner"
+
+    # Default frame, used when the variant field is empty or unmatched.
+    figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+    figma_frame_node_id: "10:100"
+
+    # The Airtable field whose value selects a variant below.
+    variant_field: "Location"
+    variants:
+      "London":                       # must match the Airtable value exactly
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "10:200"
+      "New York":
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "10:300"
+      "Virtual":
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "10:400"
+
+    field_mappings:
+      "Event Name": "Title"
+      "Date":       "Date"
+
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # 3. SESSION ASSETS — multi-output with every variant mechanism
+  #    One trigger renders up to three assets, each to its own attachment field.
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "Session Assets"
+
+    airtable_base_id:    "appXXXXXXXXXXXXXX"
+    airtable_table_name: "Sessions"
+
+    # Trigger: a SINGLE-SELECT field instead of a checkbox.
+    # Fires when the field equals trigger_value; while processing the pipeline
+    # walks it through pending → working → reset so the team sees progress.
+    airtable_trigger_field:         "Design Status"
+    airtable_trigger_value:         "Generate"
+    airtable_trigger_pending_value: "Pending"        # optional
+    airtable_trigger_working_value: "Working"        # optional
+    airtable_trigger_reset_value:   "Ready for publication"
+
+    # Optional: an Airtable MULTI-SELECT that picks which outputs to render.
+    # Its options must match the outputs' selection_value below.
+    # Leave unset to always render every output.
+    selection_field: "Generate Assets"
+
+    # Shared mappings — inherited by every output (overridable per output).
+    field_mappings:
+      "Session Title": "Title"
+      "Speaker Name":  "Speaker 1 Name"
+      "Speaker Bio":   "Speaker 1 Tagline"
+    image_field_mappings:
+      "Speaker Photo": "Speaker 1 Photo"
+
+    remove_background: true
+    erase_placeholders: false
+    font_map:
+      "Space Grotesk":      "SpaceGrotesk-Regular.ttf"
+      "Space Grotesk Bold": "SpaceGrotesk-Bold.ttf"
+
+    outputs:
+
+      # ── Output A: auto-variant on field presence ──────────────────────────
+      # If "Speaker Photo 2" has content, the two-speaker frame is used and the
+      # override mappings feed the second speaker's layers.
+      - name:             "OpenGraph"
+        selection_value:  "OpenGraph"        # runs when picked in selection_field
+        attachment_field: "OG Image"
+
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "20:100"        # default: single speaker
+
+        auto_variant_on_field: "Speaker Photo 2"
+        auto_variant_name:     "two_speakers"
+        variants:
+          two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "20:200"
+
+        field_mapping_overrides:
+          "Speaker Name 2": "Speaker 2 Name"
+        image_field_mapping_overrides:
+          "Speaker Photo 2": "Speaker 2 Photo"
+
+      # ── Output B: boolean variant (+ combination) ─────────────────────────
+      # A checked "Is Sponsored" checkbox switches to the sponsored frame.
+      # If the auto-variant field ALSO has content, the combined variant
+      # "sponsored_two_speakers" is tried first, then "sponsored".
+      - name:             "LinkedIn Social"
+        selection_value:  "LinkedIn Social"
+        attachment_field: "LinkedIn Image"
+
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "30:100"
+
+        boolean_variant_field: "Is Sponsored"
+        boolean_variant_name:  "sponsored"
+        auto_variant_on_field: "Speaker Photo 2"
+        auto_variant_name:     "two_speakers"
+        variants:
+          sponsored:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "30:200"
+          two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "30:300"
+          sponsored_two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "30:400"
+
+      # ── Output C: field-value variant map ─────────────────────────────────
+      # Maps a field's VALUE to a variant name (values that aren't valid YAML
+      # keys, or many-to-one mappings). Also combines with the auto-variant:
+      # "LiveDay LDN" + second speaker → "liveday_ldn_two_speakers".
+      - name:             "Speaker Social"
+        selection_value:  "Speaker Social"
+        attachment_field: "Speaker Social Image"
+
+        figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+        figma_frame_node_id: "40:100"        # default (virtual)
+
+        field_variant_field: "Location Type"
+        field_variant_map:
+          "LiveDay LDN": "liveday_ldn"
+          "LiveDay NYC": "liveday_nyc"
+        auto_variant_on_field: "Speaker Photo 2"
+        auto_variant_name:     "two_speakers"
+        variants:
+          liveday_ldn:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "40:200"
+          liveday_ldn_two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "40:300"
+          liveday_nyc:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "40:400"
+          liveday_nyc_two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "40:500"
+          two_speakers:
+            figma_file_key:      "XXXXXXXXXXXXXXXXXXXXXXXX"
+            figma_frame_node_id: "40:600"
+
+# Variant resolution priority (per output):
+#   boolean_variant_field → field_variant_field → auto_variant_on_field
+#   → variant_field → default frame
+# Combined names are always "<base>_<auto_variant_name>" and are tried before
+# the base variant. Unknown variants log a warning and fall back — they never
+# fail the record.
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  PDF REPORTS — multi-page documents assembled from Figma frames
+# ══════════════════════════════════════════════════════════════════════════════
+pdf_reports:
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # 4. SPONSOR RECAP — static pages + conditional data pages + closing page
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "Sponsor Recap"
+
+    airtable_base_id:    "appXXXXXXXXXXXXXX"
+    airtable_table_name: "Sponsors"
+
+    airtable_trigger_field:       "Generate Report"
+    airtable_trigger_value:       "Generate"
+    airtable_trigger_reset_value: "Done"
+
+    attachment_field: "Report PDF"
+
+    # Uploaded PDF filename: "<label>-<suffix>.pdf", label slugified.
+    filename_label_field: "Sponsor Name"
+    filename_suffix:      "Recap-2026"
+
+    # One Figma file containing all report frames.
+    figma_file_key: "XXXXXXXXXXXXXXXXXXXXXXXX"
+
+    # Sponsor logo: pulled from this attachment field and composited onto the
+    # layer named logo_layer_name on every conditional page (aspect-fit, centred).
+    logo_attachment_field: "Logo"
+    logo_layer_name:       "Logo"
+
+    font_map:
+      "Space Grotesk":      "SpaceGrotesk-Regular.ttf"
+      "Space Grotesk Bold": "SpaceGrotesk-Bold.ttf"
+
+    # Always included, in order, exported as-is (no data overlay). Cached.
+    static_page_ids:
+      - "6:100"    # cover
+      - "6:200"    # event overview
+
+    # Always appended as the final page.
+    closing_page_id: "6:900"
+
+    # Named field groups — a group is "active" when ANY of its fields has a
+    # non-empty, non-zero value on the record.
+    field_groups:
+      virtual:
+        - "Workshop registrations"
+        - "Workshop attendees"
+      booth:
+        - "Booth leads scanned"
+
+    # Conditional pages, evaluated in order. A page is included when ALL
+    # `require` groups are active and ALL `exclude` groups are inactive.
+    # field_mappings here are inverted vs. templates:
+    #   "Figma layer name" → "Airtable field name"
+    # Duplicate layer names can be disambiguated with an index: "Leads[1]".
+    combo_pages:
+
+      - figma_frame_node_id: "7:100"     # virtual-only sponsors
+        require: [virtual]
+        exclude: [booth]
+        field_mappings:
+          "Sponsor Name":   "Sponsor label"
+          "#Registrations": "Workshop registrations"
+          "#Attendees":     "Workshop attendees"
+
+      - figma_frame_node_id: "7:200"     # sponsors with a booth
+        require: [booth]
+        field_mappings:
+          "Sponsor Name": "Sponsor label"
+          "#Leads":       "Booth leads scanned"
+          "#Leads[1]":    "Booth leads scanned"   # same layer name, 2nd instance

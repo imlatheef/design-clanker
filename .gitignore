@@ -1,0 +1,29 @@
+# Your config — contains Airtable base IDs and Figma file keys.
+# Commit deliberately with `git add -f templates.yaml` if your repo is private.
+templates.yaml
+
+# Secrets
+.env
+.envrc
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Generated output
+*.jpg
+*.jpeg
+*.png
+*.pdf
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
