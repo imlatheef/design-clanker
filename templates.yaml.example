@@ -311,13 +311,13 @@ pdf_reports:
         require: [virtual]
         exclude: [booth]
         field_mappings:
-          "Sponsor Name":   "Sponsor label"
+          "Sponsor Name":   "Sponsor Name"
           "#Registrations": "Workshop registrations"
           "#Attendees":     "Workshop attendees"
 
       - figma_frame_node_id: "7:200"     # sponsors with a booth
         require: [booth]
         field_mappings:
-          "Sponsor Name": "Sponsor label"
+          "Sponsor Name": "Sponsor Name"
           "#Leads":       "Booth leads scanned"
           "#Leads[1]":    "Booth leads scanned"   # same layer name, 2nd instance
