@@ -51,13 +51,14 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline
 .page {
   min-height: 100vh;
   background: radial-gradient(600px 320px at 50% -80px, rgba(255,255,255,.05), transparent 70%);
-  padding: 0 20px 80px;
+  padding: 0 20px 28px;
 }
 .frame {
   max-width: 1080px;
   margin: 0 auto;
   border-left: 1px solid var(--line);
   border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .row { border-bottom: 1px solid var(--line); }
 .frame > .row:first-child { border-top: 1px solid var(--line); }
@@ -194,7 +195,7 @@ h1 .dim { color: var(--faint); }
 .press {
   position: absolute;
   left: 50%;
-  top: 26px;
+  top: 14px;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
@@ -216,9 +217,9 @@ h1 .dim { color: var(--faint); }
 .eyes { display: flex; gap: 16px; }
 .eye { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
 .mouth { width: 26px; height: 1px; background: var(--line-2); }
-.piston { width: 2px; height: 26px; background: var(--line-2); transition: height .16s cubic-bezier(.7,0,1,.6); }
+.piston { width: 2px; height: 16px; background: var(--line-2); transition: height .16s cubic-bezier(.7,0,1,.6); }
 .foot { width: 72px; height: 6px; border-radius: 3px; background: var(--text); transition: transform .16s; }
-.press.down .piston { height: 84px; }
+.press.down .piston { height: 56px; }
 
 /* workpiece */
 .workpiece {
@@ -269,15 +270,16 @@ h1 .dim { color: var(--faint); }
 .workpiece.armed .checkbox::after { content: "✓"; color: #0A0A0A; }
 
 .face-design {
-  background: #F4F4F2;
-  color: #111;
+  background: #191919;
+  border: 1px solid var(--line-2);
+  color: var(--text);
   border-radius: 10px;
   padding: 16px;
   position: relative;
 }
-.face-design .dtag { font-family: var(--mono); font-size: 8.5px; letter-spacing: .14em; color: #8A8A85; }
+.face-design .dtag { font-family: var(--mono); font-size: 8.5px; letter-spacing: .14em; color: var(--faint); }
 .face-design .dname { font-weight: 600; font-size: 17px; line-height: 1.15; margin-top: 18px; letter-spacing: -.02em; }
-.face-design .dtitle { font-size: 11px; color: #6E6E69; margin-top: 3px; }
+.face-design .dtitle { font-size: 11px; color: var(--muted); margin-top: 3px; }
 .face-design .davatar {
   position: absolute;
   top: 13px; right: 13px;
