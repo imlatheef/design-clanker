@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://designclanker.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://designclanker.com/og.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%2220%22%20height%3D%2214%22%20rx%3D%224%22%20fill%3D%22%23E6A144%22/%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Ccircle%20cx%3D%2219.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%2215.1%22%20y%3D%226%22%20width%3D%221.8%22%20height%3D%226%22%20fill%3D%22%23E6A144%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%225.5%22%20r%3D%222%22%20fill%3D%22%23E6A144%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%2220%22%20height%3D%2214%22%20rx%3D%224%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Ccircle%20cx%3D%2219.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%2215.1%22%20y%3D%226%22%20width%3D%221.8%22%20height%3D%226%22%20fill%3D%22%23FFFFFF%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%225.5%22%20r%3D%222%22%20fill%3D%22%23FFFFFF%22/%3E%3C/svg%3E">
 <title>Design Clanker — the tireless design robot</title>
 <style>
 @font-face { font-family: 'Geist'; font-weight: 400; font-style: normal; font-display: swap;
@@ -34,7 +34,7 @@
   --text:   #EDEDEC;
   --muted:  #9A9A96;
   --faint:  #71716B;
-  --amber:  #E6A144;
+  --accent: #FFFFFF;
   --green:  #7BC98A;
   --sans: 'Geist', -apple-system, system-ui, sans-serif;
   --mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -50,9 +50,9 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: rgba(230,161,68,.25); }
+::selection { background: rgba(255,255,255,.22); }
 a { color: inherit; }
-a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
 
 /* page-level subtle shine */
 .page {
@@ -110,7 +110,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline
 .dot {
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--amber);
+  background: var(--accent);
   animation: blink 3s infinite;
 }
 @keyframes blink { 0%, 82% { opacity: 1; } 88%, 94% { opacity: .2; } 100% { opacity: 1; } }
@@ -172,7 +172,7 @@ h1 .dim { color: var(--faint); }
   gap: 8px;
 }
 .units { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; color: var(--faint); }
-.units b { color: var(--amber); font-weight: 400; }
+.units b { color: var(--accent); font-weight: 400; }
 
 .stage {
   position: relative;
@@ -222,7 +222,7 @@ h1 .dim { color: var(--faint); }
   gap: 7px;
 }
 .eyes { display: flex; gap: 16px; }
-.eye { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+.eye { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
 .mouth { width: 26px; height: 1px; background: var(--line-2); }
 .piston { width: 2px; height: 16px; background: var(--line-2); transition: height .16s cubic-bezier(.7,0,1,.6); }
 .foot { width: 72px; height: 6px; border-radius: 3px; background: var(--text); transition: transform .16s; }
@@ -251,7 +251,7 @@ h1 .dim { color: var(--faint); }
   font-size: 11px;
   transition: border-color .2s;
 }
-.workpiece.stamping .face-record { border-color: var(--amber); }
+.workpiece.stamping .face-record { border-color: var(--accent); }
 .face-record .rrow { display: flex; justify-content: space-between; gap: 10px; padding: 2.5px 0; color: var(--faint); }
 .face-record .rrow b { color: var(--muted); font-weight: 400; text-align: right; }
 .face-record .rcheck {
@@ -273,7 +273,7 @@ h1 .dim { color: var(--faint); }
   font-size: 9px;
   transition: background .2s, border-color .2s;
 }
-.workpiece.armed .checkbox { background: var(--amber); border-color: var(--amber); }
+.workpiece.armed .checkbox { background: var(--accent); border-color: var(--accent); }
 .workpiece.armed .checkbox::after { content: "✓"; color: #0A0A0A; }
 
 .face-design {
@@ -292,7 +292,7 @@ h1 .dim { color: var(--faint); }
   top: 13px; right: 13px;
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--amber);
+  background: var(--accent);
   color: #0A0A0A;
   display: flex;
   align-items: center;
@@ -314,7 +314,7 @@ h1 .dim { color: var(--faint); }
   justify-content: flex-end;
   color: var(--faint);
 }
-.log .lvl { color: var(--amber); }
+.log .lvl { color: var(--text); }
 .log .ok { color: var(--green); }
 .log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -380,8 +380,8 @@ h1 .dim { color: var(--faint); }
   line-height: 1.8;
   color: var(--muted);
 }
-.yk { color: var(--text); }
-.ys { color: var(--amber); }
+.yk { color: var(--muted); }
+.ys { color: var(--text); }
 .yc { color: var(--faint); }
 
 /* ── Pipeline ────────────────────────────────────────────────────────────── */
@@ -396,8 +396,8 @@ h1 .dim { color: var(--faint); }
 }
 .pnode b { display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 2px; }
 .pnode span { font-family: var(--mono); font-size: 10px; color: var(--faint); }
-.pnode.hot { border-color: rgba(230,161,68,.5); }
-.pnode.hot b { color: var(--amber); }
+.pnode.hot { border-color: rgba(255,255,255,.45); }
+.pnode.hot b { color: var(--accent); }
 .parrow { display: flex; align-items: center; padding: 0 10px; color: var(--faint); font-family: var(--mono); font-size: 11px; }
 .pipe-note { padding: 0 28px 30px; }
 .pipe-note p { color: var(--muted); font-size: 13px; max-width: 68ch; }
@@ -405,17 +405,17 @@ h1 .dim { color: var(--faint); }
 /* ── Agent strip ─────────────────────────────────────────────────────────── */
 .agent-strip { padding: 30px 28px 34px; border-top: 1px solid var(--line); background: var(--cell); }
 .agent-strip p { color: var(--muted); font-size: 13.5px; max-width: 72ch; }
-.agent-strip p a { color: var(--amber); text-decoration: none; }
-.agent-strip p a:hover { text-decoration: underline; }
+.agent-strip p a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.4); }
+.agent-strip p a:hover { text-decoration-color: var(--text); }
 .agent-strip .say { font-family: var(--mono); font-size: 12px; color: var(--text); }
 
 .case-strip { padding: 22px 28px; border-top: 1px solid var(--line); background: var(--cell); }
 .case-strip p { color: var(--muted); font-size: 13.5px; max-width: 78ch; }
-.case-strip p a { color: var(--amber); text-decoration: none; white-space: nowrap; }
-.case-strip p a:hover { text-decoration: underline; }
+.case-strip p a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.4); white-space: nowrap; }
+.case-strip p a:hover { text-decoration-color: var(--text); }
 .cs-label {
   font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--amber); margin-right: 10px;
+  text-transform: uppercase; color: var(--text); margin-right: 10px;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
@@ -425,7 +425,7 @@ h1 .dim { color: var(--faint); }
   position: absolute;
   inset: auto 0 -140px 0;
   height: 280px;
-  background: radial-gradient(440px 200px at 50% 100%, rgba(230,161,68,.10), transparent 70%);
+  background: radial-gradient(440px 200px at 50% 100%, rgba(255,255,255,.06), transparent 70%);
   pointer-events: none;
 }
 .cta h2 {
@@ -525,11 +525,11 @@ h1 .dim { color: var(--faint); }
   <div class="row nav">
     <a class="logo" href="#">
       <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <rect x="6" y="11" width="20" height="15" rx="4.5" fill="#E6A144"/>
+        <rect x="6" y="11" width="20" height="15" rx="4.5" fill="#FFFFFF"/>
         <circle cx="12.5" cy="18.5" r="2" fill="#0A0A0A"/>
         <circle cx="19.5" cy="18.5" r="2" fill="#0A0A0A"/>
-        <rect x="15.1" y="5" width="1.8" height="6" fill="#E6A144"/>
-        <circle cx="16" cy="4.5" r="2" fill="#E6A144"/>
+        <rect x="15.1" y="5" width="1.8" height="6" fill="#FFFFFF"/>
+        <circle cx="16" cy="4.5" r="2" fill="#FFFFFF"/>
       </svg>
       <b>Design Clanker</b>
     </a>
@@ -724,11 +724,11 @@ h1 .dim { color: var(--faint); }
     </div>
     <div class="wordmark-wrap" aria-hidden="true">
       <svg class="patrol-bot" viewBox="0 0 32 32" fill="none">
-        <rect x="6" y="11" width="20" height="15" rx="4.5" fill="#E6A144"/>
+        <rect x="6" y="11" width="20" height="15" rx="4.5" fill="#FFFFFF"/>
         <circle class="eye" cx="12.5" cy="18.5" r="2" fill="#0A0A0A"/>
         <circle class="eye" cx="19.5" cy="18.5" r="2" fill="#0A0A0A"/>
-        <rect x="15.1" y="5" width="1.8" height="6" fill="#E6A144"/>
-        <circle cx="16" cy="4.5" r="2" fill="#E6A144"/>
+        <rect x="15.1" y="5" width="1.8" height="6" fill="#FFFFFF"/>
+        <circle cx="16" cy="4.5" r="2" fill="#FFFFFF"/>
       </svg>
       <svg class="wordmark-svg" viewBox="0 0 1200 154" preserveAspectRatio="xMidYMax meet">
         <text x="600" y="110" text-anchor="middle" textLength="1128" lengthAdjust="spacingAndGlyphs">design clanker</text>
