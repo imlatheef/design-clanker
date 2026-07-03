@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Design Clanker — the open-source design robot. Watches Airtable, renders your Figma templates with live data, uploads finished designs back to the record.">
 <meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="Design Clanker — the tireless design robot">
+<meta property="og:description" content="Open-source Airtable → Figma automation. Check a box in Airtable; get finished designs from your Figma templates. It produced 2,000+ assets for PlatformCon 2026.">
+<meta property="og:url" content="https://designclanker.com/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://designclanker.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://designclanker.com/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%226%22%20y%3D%2212%22%20width%3D%2220%22%20height%3D%2214%22%20rx%3D%224%22%20fill%3D%22%23E6A144%22/%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Ccircle%20cx%3D%2219.5%22%20cy%3D%2219%22%20r%3D%222%22%20fill%3D%22%230A0A0A%22/%3E%3Crect%20x%3D%2215.1%22%20y%3D%226%22%20width%3D%221.8%22%20height%3D%226%22%20fill%3D%22%23E6A144%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%225.5%22%20r%3D%222%22%20fill%3D%22%23E6A144%22/%3E%3C/svg%3E">
 <title>Design Clanker — the tireless design robot</title>
 <style>
@@ -26,7 +33,7 @@
   --line-2: rgba(255,255,255,.14);
   --text:   #EDEDEC;
   --muted:  #9A9A96;
-  --faint:  #5C5C58;
+  --faint:  #71716B;
   --amber:  #E6A144;
   --green:  #7BC98A;
   --sans: 'Geist', -apple-system, system-ui, sans-serif;
@@ -402,6 +409,15 @@ h1 .dim { color: var(--faint); }
 .agent-strip p a:hover { text-decoration: underline; }
 .agent-strip .say { font-family: var(--mono); font-size: 12px; color: var(--text); }
 
+.case-strip { padding: 22px 28px; border-top: 1px solid var(--line); background: var(--cell); }
+.case-strip p { color: var(--muted); font-size: 13.5px; max-width: 78ch; }
+.case-strip p a { color: var(--amber); text-decoration: none; white-space: nowrap; }
+.case-strip p a:hover { text-decoration: underline; }
+.cs-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--amber); margin-right: 10px;
+}
+
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .cta { padding: 84px 28px 0; text-align: center; position: relative; overflow: hidden; }
 .cta::before {
@@ -488,7 +504,7 @@ h1 .dim { color: var(--faint); }
   .split { grid-template-columns: 1fr; }
   .hero { padding: 64px 20px 56px; }
   .cell, .split > div { padding-left: 20px; padding-right: 20px; }
-  .sec-head, .demo-head, .log, .pipe, .pipe-note, .agent-strip, .colophon { padding-left: 20px; padding-right: 20px; }
+  .sec-head, .demo-head, .log, .pipe, .pipe-note, .agent-strip, .case-strip, .colophon { padding-left: 20px; padding-right: 20px; }
   .nav nav { gap: 16px; }
   .status { display: none; }
   .stage { height: 250px; }
@@ -533,7 +549,6 @@ h1 .dim { color: var(--faint); }
       <strong>No exports, no copy-paste, no designer on call at 2am.</strong></p>
     <div class="ctas">
       <a class="btn btn-primary" href="https://github.com/imlatheef/design-clanker">Get the robot</a>
-      <a class="btn btn-ghost" href="#config">See the config</a>
       <span class="clone">git clone github.com/imlatheef/design-clanker</span>
     </div>
   </div>
@@ -541,7 +556,7 @@ h1 .dim { color: var(--faint); }
   <div class="row" aria-label="Animated demo of a record being turned into a design">
     <div class="demo-head">
       <span class="label">Production line — live</span>
-      <span class="units">UNITS PRODUCED <b id="unit-count">0047</b></span>
+      <span class="units">UNITS PRODUCED <b id="unit-count">2,047</b></span>
     </div>
     <div class="stage">
       <div class="press" id="press">
@@ -569,6 +584,12 @@ h1 .dim { color: var(--faint); }
       <div class="rail"></div>
     </div>
     <div class="log" id="log" aria-live="off"></div>
+    <div class="case-strip">
+      <p><span class="cs-label">Field record</span> This isn't a demo reel. The robot ran PlatformCon 2026 —
+        2,000+ speaker cards, OG images, socials, video backgrounds, and sponsor recap PDFs across a global
+        virtual conference and live days in London and New York.
+        <a href="https://github.com/imlatheef/design-clanker/blob/main/docs/case-study-platformcon.md">Read the case study →</a></p>
+    </div>
   </div>
 
   <div class="row" id="spec">
@@ -740,7 +761,7 @@ h1 .dim { color: var(--faint); }
   var faceDesign = document.getElementById('face-design');
   var logEl = document.getElementById('log');
   var unitEl = document.getElementById('unit-count');
-  var units = 47;
+  var units = 2047;
   var idx = 0;
 
   function initials(n) {
@@ -824,7 +845,7 @@ h1 .dim { color: var(--faint); }
     setTimeout(function () {
       wp.classList.add('done');
       units++;
-      unitEl.textContent = String(units).padStart(4, '0');
+      unitEl.textContent = units.toLocaleString();
       addLog('<span class="ok">INFO  airtable  ✓ Uploaded  record=' + id + '  field=Generated Design — status → Done</span>');
     }, 3400);
 
