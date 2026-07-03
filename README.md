@@ -53,6 +53,16 @@ You'll need:
 | `FIGMA_API_KEY` | Figma → Account Settings → Personal Access Tokens |
 | `AIRTABLE_IMGBB_API_KEY` (optional) | [imgbb.com/api](https://imgbb.com/api) — fallback image host if the Airtable Content API isn't available on your plan |
 
+## Set up with an AI agent (recommended)
+
+The fastest path: open this repo in your coding agent — Claude Code, Cursor, Codex, whatever you use — and say **"set me up"**. [`AGENTS.md`](AGENTS.md) gives the agent a full playbook: it interviews you for your two API tokens, discovers your bases, tables, fields, and Figma frames through the APIs (no hunting for IDs in URLs), proposes the field-to-layer mappings, writes `.env` and `templates.yaml` for you, runs an end-to-end test on a real record, and walks you through deploying to Fly.io.
+
+```bash
+claude   # or your agent of choice, then: "set up design clanker for my base"
+```
+
+Prefer doing it by hand? Keep reading.
+
 ## Your first template
 
 1. **Design a frame in Figma.** Name the layers you want filled (`Title`, `Speaker Name`, `Photo`, …). See the [Figma template guide](docs/figma-templates.md) for tips (0%-opacity placeholders, static fonts, node IDs).
@@ -85,6 +95,7 @@ That's the simple case. `templates.yaml.example` walks through every feature —
 
 | Doc | What's in it |
 |---|---|
+| [AGENTS.md](AGENTS.md) | Playbook for AI coding agents — guided setup, API discovery, deploy |
 | [Configuration reference](docs/configuration.md) | Every key in `templates.yaml` and `.env`, with the variant-resolution rules |
 | [Figma template guide](docs/figma-templates.md) | How to structure Figma files so they render perfectly |
 | [Deployment guide](docs/deployment.md) | Docker, Fly.io, and GitHub Actions cron setups |
