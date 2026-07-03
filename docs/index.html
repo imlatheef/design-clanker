@@ -403,7 +403,7 @@ h1 .dim { color: var(--faint); }
 .agent-strip .say { font-family: var(--mono); font-size: 12px; color: var(--text); }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
-.cta { padding: 84px 28px 72px; text-align: center; position: relative; overflow: hidden; }
+.cta { padding: 84px 28px 0; text-align: center; position: relative; overflow: hidden; }
 .cta::before {
   content: "";
   position: absolute;
@@ -420,19 +420,51 @@ h1 .dim { color: var(--faint); }
 }
 .cta .sub { color: var(--muted); margin-top: 12px; font-size: 15px; }
 .cta .ctas { justify-content: center; }
-.wordmark {
-  margin-top: 74px;
-  font-weight: 600;
-  font-size: clamp(52px, 9.6vw, 118px);
-  letter-spacing: -.045em;
-  line-height: 1;
-  white-space: nowrap;
-  background: linear-gradient(180deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,.10) 55%, rgba(255,255,255,.02) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.wordmark-wrap {
+  margin-top: 72px;
+  position: relative;
   user-select: none;
 }
+/* blueprint registration marks */
+.wordmark-wrap::before, .wordmark-wrap::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  width: 11px; height: 11px;
+  background:
+    linear-gradient(rgba(255,255,255,.24), rgba(255,255,255,.24)) center / 11px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.24), rgba(255,255,255,.24)) center / 1px 11px no-repeat;
+}
+.wordmark-wrap::before { left: 2px; }
+.wordmark-wrap::after { right: 2px; }
+.wordmark-svg { display: block; width: 100%; height: auto; }
+.wordmark-svg text {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 150px;
+  fill: none;
+  stroke: rgba(255,255,255,.34);
+  stroke-width: 1.1;
+  stroke-dasharray: 7 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.patrol-bot {
+  position: absolute;
+  top: -30px;
+  left: 3%;
+  width: 26px; height: 26px;
+  animation: patrol-x 36s linear infinite, patrol-bob .9s ease-in-out infinite alternate;
+}
+.patrol-bot .eye { animation: bot-blink 4.6s infinite; }
+@keyframes patrol-x {
+  0%   { left: 3%; }
+  49%  { left: calc(97% - 26px); }
+  51%  { left: calc(97% - 26px); }
+  100% { left: 3%; }
+}
+@keyframes patrol-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+@keyframes bot-blink { 0%, 88% { opacity: 1; } 92%, 96% { opacity: .1; } 100% { opacity: 1; } }
 .colophon {
   display: flex;
   justify-content: space-between;
@@ -460,7 +492,7 @@ h1 .dim { color: var(--faint); }
   .nav nav { gap: 16px; }
   .status { display: none; }
   .stage { height: 250px; }
-  .wordmark { font-size: 8.8vw; }
+  .patrol-bot { width: 20px; height: 20px; top: -24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -670,7 +702,18 @@ h1 .dim { color: var(--faint); }
       <a class="btn btn-primary" href="https://github.com/imlatheef/design-clanker">Star on GitHub</a>
       <a class="btn btn-ghost" href="https://github.com/imlatheef/design-clanker#quick-start">Quick start</a>
     </div>
-    <div class="wordmark" aria-hidden="true">DESIGN CLANKER</div>
+    <div class="wordmark-wrap" aria-hidden="true">
+      <svg class="patrol-bot" viewBox="0 0 32 32" fill="none">
+        <rect x="6" y="11" width="20" height="15" rx="4.5" fill="#E6A144"/>
+        <circle class="eye" cx="12.5" cy="18.5" r="2" fill="#0A0A0A"/>
+        <circle class="eye" cx="19.5" cy="18.5" r="2" fill="#0A0A0A"/>
+        <rect x="15.1" y="5" width="1.8" height="6" fill="#E6A144"/>
+        <circle cx="16" cy="4.5" r="2" fill="#E6A144"/>
+      </svg>
+      <svg class="wordmark-svg" viewBox="0 0 1200 152" preserveAspectRatio="xMidYMax meet">
+        <text x="600" y="117" text-anchor="middle" textLength="1128" lengthAdjust="spacingAndGlyphs">design clanker</text>
+      </svg>
+    </div>
   </div>
 
   <div class="colophon">
