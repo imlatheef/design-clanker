@@ -22,6 +22,7 @@ build/
 *.jpeg
 *.png
 *.pdf
+!docs/og.png
 
 # OS / editor
 .DS_Store
