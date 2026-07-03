@@ -51,7 +51,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline
 .page {
   min-height: 100vh;
   background: radial-gradient(600px 320px at 50% -80px, rgba(255,255,255,.05), transparent 70%);
-  padding: 0 20px 28px;
+  padding: 0 20px;
 }
 .frame {
   max-width: 1080px;
@@ -109,7 +109,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline
 @keyframes blink { 0%, 82% { opacity: 1; } 88%, 94% { opacity: .2; } 100% { opacity: 1; } }
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
-.hero { padding: 88px 28px 72px; }
+.hero { padding: 110px 28px 96px; }
 h1 {
   font-size: clamp(36px, 5.6vw, 58px);
   font-weight: 600;
@@ -120,13 +120,13 @@ h1 {
 }
 h1 .dim { color: var(--faint); }
 .lede {
-  margin-top: 20px;
+  margin-top: 26px;
   max-width: 56ch;
   font-size: 16.5px;
   color: var(--muted);
 }
 .lede strong { color: var(--text); font-weight: 500; }
-.ctas { margin-top: 34px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.ctas { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .btn {
   display: inline-flex;
   align-items: center;
@@ -480,13 +480,13 @@ h1 .dim { color: var(--faint); }
 .colophon a:hover { color: var(--muted); }
 
 @media (max-width: 860px) {
-  .page { padding: 0 8px 16px; }
+  .page { padding: 0 8px; }
   .nav { padding: 14px 18px; }
   .nav nav a:not(.gh) { display: none; }
   .grid { grid-template-columns: 1fr; }
   .grid .cell:not(:nth-child(3n+1)) { border-left: none; }
   .split { grid-template-columns: 1fr; }
-  .hero { padding: 56px 20px 48px; }
+  .hero { padding: 64px 20px 56px; }
   .cell, .split > div { padding-left: 20px; padding-right: 20px; }
   .sec-head, .demo-head, .log, .pipe, .pipe-note, .agent-strip, .colophon { padding-left: 20px; padding-right: 20px; }
   .nav nav { gap: 16px; }
@@ -527,8 +527,7 @@ h1 .dim { color: var(--faint); }
   </div>
 
   <div class="row hero">
-    <span class="label">Open source · MIT · Airtable → Figma → Airtable</span>
-    <h1 style="margin-top: 22px;">The tireless design robot.<br><span class="dim">Check a box. Get designs.</span></h1>
+    <h1>The tireless design robot.<br><span class="dim">Check a box. Get designs.</span></h1>
     <p class="lede">Design Clanker watches your Airtable base and stamps out finished artwork from your
       Figma templates — real data, real fonts, real photos — then files it straight back onto the record.
       <strong>No exports, no copy-paste, no designer on call at 2am.</strong></p>
@@ -710,8 +709,8 @@ h1 .dim { color: var(--faint); }
         <rect x="15.1" y="5" width="1.8" height="6" fill="#E6A144"/>
         <circle cx="16" cy="4.5" r="2" fill="#E6A144"/>
       </svg>
-      <svg class="wordmark-svg" viewBox="0 0 1200 152" preserveAspectRatio="xMidYMax meet">
-        <text x="600" y="117" text-anchor="middle" textLength="1128" lengthAdjust="spacingAndGlyphs">design clanker</text>
+      <svg class="wordmark-svg" viewBox="0 0 1200 154" preserveAspectRatio="xMidYMax meet">
+        <text x="600" y="110" text-anchor="middle" textLength="1128" lengthAdjust="spacingAndGlyphs">design clanker</text>
       </svg>
     </div>
   </div>
