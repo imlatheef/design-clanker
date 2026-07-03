@@ -80,7 +80,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--amber); outline
 }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo svg { display: block; }
-.logo b { font-weight: 600; font-size: 13.5px; letter-spacing: .01em; }
+.logo b { font-weight: 600; font-size: 13.5px; letter-spacing: .01em; white-space: nowrap; }
 .nav nav { margin-left: auto; display: flex; gap: 26px; align-items: center; }
 .nav nav a {
   font-family: var(--mono);
@@ -448,14 +448,19 @@ h1 .dim { color: var(--faint); }
 .colophon a:hover { color: var(--muted); }
 
 @media (max-width: 860px) {
+  .page { padding: 0 8px 16px; }
+  .nav { padding: 14px 18px; }
+  .nav nav a:not(.gh) { display: none; }
   .grid { grid-template-columns: 1fr; }
   .grid .cell:not(:nth-child(3n+1)) { border-left: none; }
   .split { grid-template-columns: 1fr; }
-  .hero { padding: 60px 24px 52px; }
+  .hero { padding: 56px 20px 48px; }
+  .cell, .split > div { padding-left: 20px; padding-right: 20px; }
+  .sec-head, .demo-head, .log, .pipe, .pipe-note, .agent-strip, .colophon { padding-left: 20px; padding-right: 20px; }
   .nav nav { gap: 16px; }
   .status { display: none; }
   .stage { height: 250px; }
-  .wordmark { font-size: 13vw; }
+  .wordmark { font-size: 8.8vw; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -485,7 +490,7 @@ h1 .dim { color: var(--faint); }
       <a href="#spec">Spec</a>
       <a href="#config">Config</a>
       <a href="#deploy">Deploy</a>
-      <a href="https://github.com/imlatheef/design-clanker">GitHub ↗</a>
+      <a class="gh" href="https://github.com/imlatheef/design-clanker">GitHub ↗</a>
     </nav>
   </div>
 
