@@ -96,7 +96,7 @@ That's the simple case. `templates.yaml.example` walks through every feature —
 | Doc | What's in it |
 |---|---|
 | [AGENTS.md](AGENTS.md) | Playbook for AI coding agents — guided setup, API discovery, deploy |
-| [Case study](docs/case-study-platformcon.md) | How it produced the sponsor recap PDFs for PlatformCon 2026 |
+| [Case study](https://www.imranlatheef.com/writing/automating-sponsor-recap-pdfs/) | How it produced the sponsor recap PDFs for PlatformCon 2026 |
 | [Hardening plan](docs/hardening-plan.md) | Known gaps and the prioritized plan to close them |
 | [Configuration reference](docs/configuration.md) | Every key in `templates.yaml` and `.env`, with the variant-resolution rules |
 | [Figma template guide](docs/figma-templates.md) | How to structure Figma files so they render perfectly |
